@@ -1,4 +1,5 @@
-# Pharos: Illuminating the Druggable Genome
+# [Pharos: Illuminating the Druggable Genome](https://pharos.nih.gov/)
+https://pharos.nih.gov/
 
 [Pharos](https://pharos.nih.gov/) is the flagship web interface for the 
 Illuminating Druggable Genome (IDG) Consortium, an NIH Common Fund 

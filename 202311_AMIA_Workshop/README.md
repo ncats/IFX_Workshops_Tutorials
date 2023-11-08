@@ -1,4 +1,5 @@
 # 2023 November AMIA Workshop
+Saturday, Nov 11, 2023 1:00 PM - 4:30 PM CST
 
 ##Table of Contents
 1. [Facilitators](#facilitators)
@@ -9,7 +10,7 @@
 
 ##Facilitators <a id = facilitators></a>
 [Ewy Mathé, Ph.D.](https://ncats.nih.gov/staff/mathee): Director of Informatics <br>
-[Keith Kelleher](https://ncats.nih.gov/preclinical/core/informatics/informatics-scientists-software-developers): Research Scientist <br>
+[Keith Kelleher, Ph.D.](https://ncats.nih.gov/preclinical/core/informatics/informatics-scientists-software-developers): Research Scientist <br>
 [Timothy Sheils](https://ncats.nih.gov/staff/sheilstk): Research Scientist <br>
 [Qian Zhu, Ph.D.](https://ncats.nih.gov/staff/zhuqn): Staff Scientist <br>
 
@@ -26,7 +27,7 @@ Human and programmatic access <br>
 
 Break - 5 min
 
-###Pharos - target annotations (and more) (40 min)
+###[Pharos](/Pharos/README.md) - target annotations (and more) (40 min)
 ####Keith Kelleher
 Intro<br>
 Live Tutorial<br>

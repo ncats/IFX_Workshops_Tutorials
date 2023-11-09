@@ -2,13 +2,6 @@
 Saturday, Nov 11, 2023 1:00 PM - 4:30 PM CST
 Churchill D-Hilton New Orleans Riverside
 
-### Table of Contents
-1. [Facilitators](#facilitators)
-2. [Schedule](#schedule)
-3. [Resource Descriptions](#descriptions)
-4. [Requirements](#requirements)
-
-
 ### Facilitators <a id = facilitators></a>
 [Ewy Mathé, Ph.D.](https://ncats.nih.gov/staff/mathee): Director of Informatics <br>
 [Keith Kelleher, Ph.D.](https://ncats.nih.gov/preclinical/core/informatics/informatics-scientists-software-developers): Research Scientist <br>

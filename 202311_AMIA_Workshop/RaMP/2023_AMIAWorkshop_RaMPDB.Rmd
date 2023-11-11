@@ -1,0 +1,366 @@
+---
+title: "Quick Start with RaMP-DB - SQLite Version"
+author: "Ewy Mathé"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    self_contained: yes
+    highlight: kate
+    theme: yeti
+    toc: yes
+    fig_width: 9
+    fig_height: 7
+    code_folding: show
+vignette: >
+  %\VignetteIndexEntry{Running RaMP locally}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+## Introduction
+
+[RaMP-DB]((https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5876005/) (Relational database of Metabolomic Pathways) is a publicly available relational database that integrates multiple sources of biological, structural/chemical, disease, and ontology annotations for analytes (metabolites, genes, proteins) from multiple resources including HMDB, KEGG, Reactome, WikiPathways, LIPIDMAPS, ChEBI and Rhea.  The resource was initially created to 
+1) enhance the ability to interpret metabolomic and multi-omic data using standardized annotations on analytes; 
+2) fill the gap in the availability of benchmark annotation database that was consistently used to compare pathway enrichment methods. 
+
+Today, RaMP-DB includes 256,537 chemical structures, of which 43,338 are lipids, 16,443 genes, 53,952 pathways, 63,396 metabolic enzyme/metabolite reactions, and 699 ontologies.  Notably, curation of the source data within RaMP-DB is semi-automatic to help ensure sustainability of the resource.  The curation process involves a first automatic pass for errors in ID mappings for metabolites across resources (e.g. comparison of MW and chemical properties), followed by a second manual curation.   
+
+### Expanded content for RaMP-DB 3.0
+
+*Source database updates*
+- Increased focus on lipid annotations
+- Incorporation of curated reactions from Rhea 
+
+*Improved semi-automated integration scripts*
+
+*SQLite version (replacing MySQL)*
+Greatly facilitates R package installation and integration with other tools (COMETS Analytics, MetaboAnalyst, Bioconductor Computational Metabolomics Ecosystem)
+
+*New queries of biochemical reactions*
+
+
+### Main Functionalities
+
+
+![RaMP-DB Content and Functions](/Users/mathee/Documents/Conferences/2023_AMIANov/2023AMIA_RaMPWorkshop/RaMP_Functions.png)
+
+RaMP-DB enables:
+- Single and batch queries of pathways, common reactions, ontologies, chemical structures/classes:
+
+  - Retrieve Analytes From Input Pathway(s) and vice versa
+  - Retrieve Ontologies From Input Metabolites and vice versa 
+  - Retrieve Analytes Involved in the Same Reaction as Input Analytes
+  - Retrieve Chemical Classes from Input Metabolites and vice versa
+
+- Pathway and Chemical Class enrichment given input analytes
+
+
+### Access to SQLite Branch (to be released soon at v3.0)
+
+- [R package](https://github.com/ncats/RaMP-DB/tree/sqlite) - The latest package is on the SQLite branch will be released this month!
+- User-friendly web interface (https://rampdb.nih.gov/).  
+
+Direct any questions through the Issues tab in GibHub or via email at [NCATSRaMP@nih.gov](mailto:NCATSRaMP@nih.gov).
+
+### Installation
+
+For this workshop, use the sqlite branch install of RaMP.
+
+*Special Note:*
+There is incompatibility (reported here: https://stat.ethz.ch/pipermail/bioc-devel/2023-October/020003.html) between the version of BiocFileCache installed using BiocManager (2.8.0) and the actual latest version (2.10.1).  The latter is needed to be compatible with other dependencies in RaMP-DB.  To install the latest version, you will need to download the source file from Bioconductor (https://bioconductor.org/packages/release/bioc/html/BiocFileCache.html), then install using the install.packages() function.  For a Mac, this looks like this:
+
+```{r}
+# install.packages("YourDirectory/BiocFileCache_2.10.1.tgz")
+```
+
+You can install the RaMP-DB package directly from GitHub using the install_github() function available through the [devtools package](https://cran.r-project.org/web/packages/devtools/index.html). In the R Console, type the following:
+
+```{r, eval=F}
+# Locally install RaMP
+install.packages("devtools")
+library(devtools)
+install_github("ncats/RAMP-DB", ref="sqlite")
+```
+
+
+
+```{r, eval=F}
+packageVersion('BiocFileCache')
+install_github("ncats/RAMP-DB", ref="sqlite")
+```
+
+Now you can load your package and list available database versions within your local file cache and in our remote repository. 
+```{r message=F, warning=F}
+library(RaMP)
+# Some other packages 
+library(DT) # for prettier tables in vignette
+library(dplyr)
+library(magrittr)
+
+RaMP::listAvailableRaMPDbVersions()
+
+```
+
+Next, initialize the RaMP database object and automatically retrieve the latest version of the database (unless you specify a specific version, e.g., version = '2.3.2', which could be useful for back compatibility).  
+
+```{r message=F, warning=F}
+rampDB <- RaMP()
+```
+
+
+*Special Note:*
+When entering IDs, prepend each ID with the database of origin followed by a colon, for example kegg:C02712, hmdb:HMDB04824, etc.. It is possible to input IDs using multiple different sources. RaMP currently supports the following ID types (that should be prepended):
+
+```{r}
+  metabprefixes <- getPrefixesFromAnalytes(db = rampDB, "metabolite")
+  geneprefixes <- getPrefixesFromAnalytes(db = rampDB, "gene")
+
+  datatable(rbind(metabprefixes, geneprefixes))
+```
+
+The supported ID types for searching chemical classes are:
+ 'iso_smiles', 'inchi_key', 'inchi_key_prefix', 'inchi', 'mw', 'monoisotop_mass', 'formula', 'common_name'.
+ 
+
+
+## Supported RaMP Queries
+
+### Pathway Queries
+
+#### Retrieve analytes from pathway(s).
+
+Retrieve analytes using a pathway name or name: 
+```{r}
+myanalytes <- getAnalyteFromPathway(db = rampDB, pathway="Sphingolipid metabolism")
+
+# See results in a nice table
+datatable(myanalytes)
+
+# Can also input multiple pathways:
+myanalytes <- getAnalyteFromPathway(db = rampDB, pathway=c("De Novo Triacylglycerol Biosynthesis", 
+                                              "sphingolipid metabolism"))
+```
+
+
+*Special Note:*
+When entering IDs, prepend each ID with the database of origin followed by a colon, for example kegg:C02712, hmdb:HMDB04824, etc.. It is possible to input IDs using multiple different sources. RaMP currently supports the following ID types (that should be prepended):
+
+```{r}
+  metabprefixes <- getPrefixesFromAnalytes(db = rampDB, "metabolite")
+  geneprefixes <- getPrefixesFromAnalytes(db = rampDB, "gene")
+
+  datatable(rbind(metabprefixes, geneprefixes))
+```
+
+
+Now let's search for pathways that involve the two genes MDM2 and TP53, and the two metabolites glutamate and creatinine.
+
+```{r}
+pathwaydfids <- getPathwayFromAnalyte(db = rampDB, c("ensembl:ENSG00000135679", "hmdb:HMDB0000064",
+        "hmdb:HMDB0000148", "ensembl:ENSG00000141510"))
+datatable(pathwaydfids)
+```
+
+Note that each row returns a pathway attributed to one of the input analytes.
+To retrieve the number of unique pathways returned for all analytes or each analyte, try the following:
+
+```{r}
+print(paste("Number of Unique Pathways Returned for All Analytes:", 
+            length(unique(pathwaydfids$pathwayId))))
+lapply(unique(pathwaydfids$commonName), function(x) {
+        (paste("Number of Unique Pathways Returned for",x,":",
+                length(unique(pathwaydfids[which(pathwaydfids$commonName==x),]$pathwayId))))})
+```
+
+### Ontology queries
+
+Conversely, the user can retrieve the metabolites that are associated with a specific ontology or vector of ontologies. We can accomplish this using the function getMetaFromOnto(). It should be noted that it does not matter which ontology the metabolites are from. The function will return all metabolites associated with all the ontologies specified by the user.
+```{r}
+ontologies.of.interest <- c("Colon", "Liver", "Lung")
+
+new.metabolites <- RaMP::getMetaFromOnto(db = rampDB, ontology = ontologies.of.interest)
+
+datatable(head(new.metabolites, n=10))
+```
+
+#### Retrieve Ontologies from Input Metabolites
+Ontologies are retrieved from HMDB and include annotations such as health condition, organ/components, tissue, biofluid, industrial applications, etc.
+
+To retrieve ontologies from a user-input list of analytes, type the following:
+
+```{r}
+analytes.of.interest <- c("ensembl:ENSG00000135679", "hmdb:HMDB0000064",
+        "hmdb:HMDB0000148", "ensembl:ENSG00000141510")
+new.ontologies <- RaMP::getOntoFromMeta(db = rampDB, analytes = analytes.of.interest)
+datatable(new.ontologies)
+```
+
+### Reaction Queries
+Users can retrieve analytes belonging to the same reaction, which is useful for multi-omic applications (e.g., what genes catalyze reactions involving a list of metabolites?).  
+
+Here is an example where a vector of proteins and metabolites are input, and associated metabolites and proteins, respectively, are returned.  
+
+```{r message=F}
+# Let's search for enzymes catalyzing reactions involving creatine:
+mytranscripts <- rampFastCata(db = rampDB, analytes = "hmdb:HMDB0000064")
+datatable(mytranscripts)
+
+# Let's search for metabolites involved in reactions catalyzed by GAD1
+mymetabolites <- rampFastCata(db = rampDB, analytes = "uniprot:Q99259")
+datatable(mymetabolites)
+```
+
+Visualize your results:
+
+```{r}
+plotCataNetwork(mytranscripts)
+```
+
+
+#### New ways to interact with Rhea reactions
+
+Users can query Rhea reactions from a list of analytes and retrieve all rich information on the reactions.  The function returns 3 dataframes:
+1) metabolites-to-reactions
+2) proteins-to-reactions
+3) metProteinCommonReactions: reactions that have at least one user-input metabolites and one user-input protein.
+
+```{r}
+analytes.of.interest <- c('chebi:57368', 'uniprot:Q96N66', 'CHEBI:73003')
+reactionsLists <- RaMP::getReactionsForAnalytes(db = rampDB, analytes = analytes.of.interest, includeTransportRxns = F, humanProtein = T)
+names(reactionsLists)
+
+# Just show reactions with at least one metabolite and one protein from the user list.
+datatable(subset(reactionsLists$metProteinCommonReactions, select = -c(rxn_html_label)))
+
+```
+
+### Chemical Classes and Properties Queries
+
+RaMP incorporates Classfire and LIPIDMAPS classes, which can readily be retrieved by inputting metabolite names.  Remember that metabolite names must be prepended by one of the following ID types:
+
+```{r}
+getPrefixesFromAnalytes(db = rampDB, "metabolite")
+```
+
+#### Query Chemical Classes
+
+Here's how to query chemical classes:
+
+```{r}
+metabolites.of.interest = c('hmdb:HMDB0000056','hmdb:HMDB0000439','hmdb:HMDB0000479','hmdb:HMDB0000532',
+                            'hmdb:HMDB0001015','hmdb:HMDB0001138','hmdb:HMDB0029159','hmdb:HMDB0029412',
+                            'hmdb:HMDB0034365','hmdb:HMDB0035227','hmdb:HMDB0007973','hmdb:HMDB0008057',
+                            'hmdb:HMDB0011211')
+chemical.classes <- chemicalClassSurvey(db = rampDB, mets = metabolites.of.interest)
+metabolite.classes <- as.data.frame(chemical.classes$met_classes)
+datatable(metabolite.classes)
+
+# Print unique class names:
+print(unique(metabolite.classes$class_name))
+```
+
+
+###@ Query Chemical Properties
+
+Here's how to query chemical properties:
+```{r}
+chemical.properties <- getChemicalProperties(db = rampDB, metabolites.of.interest)
+chemical.data <- chemical.properties$chem_props
+datatable(chemical.data)
+```
+
+### Enrichment Analyses
+RaMP performs pathway and chemical class overrespresentation analysis using Fisher's tests.
+
+#### Pathway Enrichment (multi-omic)
+Pathway enrichment can be run on gene/proteins and metabolites.  Note that RaMP-DB focuses on human metabolic pathways.
+
+```{r, results='hide'}
+fisher_results <- runCombinedFisherTest(db = rampDB, analytes = c(
+                                                  "hmdb:HMDB0000033",
+                                                  "hmdb:HMDB0000052",
+                                                  "hmdb:HMDB0000094",
+                                                  "hmdb:HMDB0000161",
+                                                  "hmdb:HMDB0000168",
+                                                  "hmdb:HMDB0000191",
+                                                  "hmdb:HMDB0000201",
+                                                  "chemspider:10026",
+                                                  "hmdb:HMDB0006059",
+                                                  "Chemspider:6405",
+                                                  "CAS:5657-19-2",
+                                                  "hmdb:HMDB0002511",
+                                                  "chemspider:20171375",
+                                                  "CAS:133-32-4",
+                                                  "CAS:5746-90-7",
+                                                  "CAS:477251-67-5",
+                                                  "hmdb:HMDB0000695",
+                                                  "chebi:15934",
+                                                  "CAS:838-07-3",
+                                                  "hmdb:HMDBP00789",
+                                                  "hmdb:HMDBP00283",
+                                                  "hmdb:HMDBP00284",
+                                                  "hmdb:HMDBP00850"))
+dim(fisher_results)
+
+```
+
+To filter the pathways for significance (e.g., FDR p-value < 0.05):
+```{r}
+filtered.fisher.results <- FilterFishersResults(fisher_results, pval_type = 'holm', pval_cutoff=0.05)
+# Quick view results:
+datatable(filtered.fisher.results$fishresults)
+```
+
+#Note* 
+RaMP-DB combines pathways from multiple sources, thus similar/overlapping pathways may be represented more than once.  Further, due to the hierarchical nature of pathways and because Fisher's testing assumes pathways are independent, subpathways and their parent pathways may appear in a list.
+
+The following clustering function can be run to help group together similar/overlaping.
+
+```{r}
+clusters <- RaMP::findCluster(db = rampDB, filtered.fisher.results,
+  perc_analyte_overlap = 0.2,
+  min_pathway_tocluster = 2, perc_pathway_overlap = 0.2
+)
+
+## print("Pathways with Holm-adjusted Pval < 0.05")
+
+datatable(clusters$fishresults %>% mutate_if(is.numeric, ~ round(., 8)),
+  rownames = FALSE)
+
+```
+
+To visualize:
+
+```{r, fig.height = 8}
+pathwayResultsPlot(db = rampDB, filtered.fisher.results, text_size = 8, perc_analyte_overlap = 0.2, 
+	min_pathway_tocluster = 2, perc_pathway_overlap = 0.2, interactive = FALSE)
+```
+
+
+
+*Note*: To explicitly view the results of mapping input IDs to RaMP, users can run the getPathwayFromAnalyte() function as noted in above in the section "Retrieve Pathways From Input Analyte(s)".
+
+
+#### Chemical Enrichment
+Users can perform chemical enrichment analysis for Classyfire classes, sub-classess, and super-classes, and for LIPIDMAPS categories, main classess, and sub classes.  Here's how:
+
+```{r message=F}
+metabolites.of.interest = c('hmdb:HMDB0000056','hmdb:HMDB0000439','hmdb:HMDB0000479','hmdb:HMDB0000532',
+                            'hmdb:HMDB0001015','hmdb:HMDB0001138','hmdb:HMDB0029159','hmdb:HMDB0029412',
+                            'hmdb:HMDB0034365','hmdb:HMDB0035227','hmdb:HMDB0007973','hmdb:HMDB0008057',
+                            'hmdb:HMDB0011211')
+chemical.enrichment <- chemicalClassEnrichment(db = rampDB, mets = metabolites.of.interest)
+
+# Enrichment was performed on the following chemical classes:
+names(chemical.enrichment)
+
+# To retrieve results for the ClassyFire Class:
+classy_fire_classes <- chemical.enrichment$ClassyFire_class
+datatable(classy_fire_classes)
+```
+
+*Note*: To explicitly view the results of mapping input IDs to RaMP, users can run the chemicalClassSurvey() function as noted in above in the section "Retrieve Chemical Class from Input Metabolites".
+
+And for good measure:
+```{r}
+sessionInfo()
+```

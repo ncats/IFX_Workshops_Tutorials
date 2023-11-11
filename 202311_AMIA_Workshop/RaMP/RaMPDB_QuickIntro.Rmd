@@ -18,7 +18,8 @@ vignette: >
 ---
 ## Introduction
 
-[RaMP-DB]((https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5876005/) (Relational database of Metabolomic Pathways) is a publicly available relational database that integrates multiple sources of biological, structural/chemical, disease, and ontology annotations for analytes (metabolites, genes, proteins) from multiple resources including HMDB, KEGG, Reactome, WikiPathways, LIPIDMAPS, ChEBI and Rhea.  The resource was initially created to 
+[RaMP-DB](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5876005/) (Relational database of Metabolomic Pathways) is a publicly available relational database that integrates multiple sources of biological, structural/chemical, disease, and ontology annotations for analytes (metabolites, genes, proteins) from multiple resources including HMDB, KEGG, Reactome, WikiPathways, LIPIDMAPS, ChEBI and Rhea.  The resource was initially created to 
+
 1) enhance the ability to interpret metabolomic and multi-omic data using standardized annotations on analytes; 
 2) fill the gap in the availability of benchmark annotation database that was consistently used to compare pathway enrichment methods. 
 
@@ -63,7 +64,7 @@ Direct any questions through the Issues tab in GibHub or via email at [NCATSRaMP
 
 ### Installation
 
-For this workshop, use the sqlite branch install of RaMP.
+For this workshop, use the sqlite branch install of RaMP.  Be sure to have the latest R version (4.3.2).
 
 *Special Note:*
 There is incompatibility (reported here: https://stat.ethz.ch/pipermail/bioc-devel/2023-October/020003.html) between the version of BiocFileCache installed using BiocManager (2.8.0) and the actual latest version (2.10.1).  The latter is needed to be compatible with other dependencies in RaMP-DB.  To install the latest version, you will need to download the source file from Bioconductor (https://bioconductor.org/packages/release/bioc/html/BiocFileCache.html), then install using the install.packages() function.  For a Mac, this looks like this:

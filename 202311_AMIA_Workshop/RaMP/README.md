@@ -10,7 +10,7 @@ Today, RaMP-DB includes 254,860 chemical structures, of which 43,338 are lipids,
 The main functionalities for interacting with RaMP-DB include single and batch queries as well as chemical and biological pathway enrichement analyses. Some useful utilities include the ability to input mixed IDs for analytes (e.g. LIPIDMAPS, PubChem, HMDB, etc for metabolites and UniProt, HMDB, and Ensembl IDs for genes/proteins), the ability to globally evaluate how much is known about analytes of interest, and clustering of enriched pathways for ease of interpreting enrichment results.  The web interface is served by APIs that can also serve as endpoints for integrating RaMP-DB with other tools.  Finally, RaMP-DB users can also directly download the database as a MySQL dump or SQLite for their own mining or incorporation into other tools.        
 
 ## Workshop Vignette
-Access the workshop vignette [here](https://ncats.github.io/IFX_Workshops_Tutorials/202311_AMIA_Workshop/RaMP/4%20-%202023_AMIAWorkshop_RaMPDB.html).
+Access the workshop vignette [here](https://ncats.github.io/IFX_Workshops_Tutorials/202311_AMIA_Workshop/RaMP/RaMPDB_QuickIntro.html).
 
 ## RaMP-DB Access and Contact
 - [R package](https://github.com/ncats/RaMP-DB/tree/sqlite) - The latest package is on the SQLite branch will be released this month!

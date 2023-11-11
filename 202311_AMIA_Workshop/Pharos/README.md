@@ -1,14 +1,5 @@
 # [Pharos: Illuminating the Druggable Genome](https://pharos.nih.gov/)
 
-[Pharos](https://pharos.nih.gov/) is the flagship web interface for the 
-Illuminating Druggable Genome (IDG) Consortium, an NIH Common Fund 
-project. Pharos integrates cutting-edge informatics tools and serves 
-as your portal to access valuable insights and resources about 
-understudied protein targets. 
-
-This workshop will help you explore, analyze, and download data via
-the web platform, as well as programmatically through the API.
-
 ## Table of Contents
 
 1. [Introduction to Pharos](#introduction-to-pharos)
@@ -18,10 +9,18 @@ the web platform, as well as programmatically through the API.
 
 ## Introduction to Pharos <a id="introduction-to-pharos"></a>
 
+[Pharos](https://pharos.nih.gov/) is the flagship web interface for the
+Illuminating Druggable Genome (IDG) Consortium, an NIH Common Fund
+project. Pharos integrates cutting-edge informatics tools and serves
+as your portal to access valuable insights and resources about
+understudied protein targets.
+
 Pharos is designed to streamline your research and data analysis tasks.
 It offers a wide range of features to help you explore, visualize, and analyze your 
 datasets efficiently.
 
+This workshop will help you explore, analyze, and download data via
+the web platform, as well as programmatically through the API.
 
 ## Tools for your toolbox <a id="tools-for-your-toolbox"></a>
 ### 1. Finding specific targets, diseases, or ligands
@@ -38,6 +37,7 @@ datasets efficiently.
    * Drug & Ligand associations
    * Publications and publication statistics
      * ![word cloud](images/primary2.png)
+     
 ### 3. List pages
    * List pages provide capacity to filter and sort data, as well as some analysis features
    * Facets display the counts of elements in the list with particular values
@@ -46,7 +46,7 @@ datasets efficiently.
      * ![enrichment](images/enrichment.png)
    * UpSet Plots tell you about the combinations of facet values the elements in the list have
      * ![upset](images/upset.png)
-   * 
+
 ### 4. Expanding the search for data / Pivoting your search 
    * There are many options to expand your search, in the case of data sparsity
    * For Targets

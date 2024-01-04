@@ -3,8 +3,9 @@
 ## Table of Contents
 1. [Introduction to GSRS and Inxight Drugs](#introduction-to-both)
 2. [Tools for your toolbox](#tools-for-your-toolbox)
-3. [KNIME Workflows](#knime)
-4. [Contact Us](#contact-us)
+3. [Contact Us](#contact-us)
+
+[KNIME Workflows](https://hub.knime.com/kkelleher/spaces/Public/~MkxwIBPxYVuM-aiY/)
 
 ## Introduction to GSRS and Inxight Drugs <a id="introduction-to-both"></a>
 [GSRS](https://gsrs.ncats.nih.gov/) is a developed and maintained in concert with the FDA, with the goal
@@ -60,6 +61,10 @@ programmatically through the API.
   * https://drugs.ncats.io/api/v1/substances({{UUID-or-UNII}})?view=full
 * Additional Details
   * https://drugs.ncats.io/api/v1/substances({{UUID-or-UNII}})/@additional?view=full
+
+### 6. API for GSRS
+* API
+  * https://gsrs.ncats.nih.gov/#/api
 
   
 ## Contact Us <a id="contact-us"></a>

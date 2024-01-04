@@ -25,7 +25,7 @@ Break - 5 min
 
 Break - 5 min
 
-#### [GSRS/Inxight](GSRS_Inxight) (3:30-3:50 pm) - drugs (20 min)
+#### [GSRS/Inxight](/GSRS-Inxight/README.md) (3:30-3:50 pm) - drugs (20 min)
 
 #### Workflows and Open Discussion (3:50-4:30 pm)
 

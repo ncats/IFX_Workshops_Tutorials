@@ -13,19 +13,19 @@ Churchill D-Hilton New Orleans Riverside
 
 Break (get set-up with computers)
 
-#### [RDAS](/RDAS/README.md) (1:15-1:55 pm)  - Rare disease annotations (40 min)
+#### [RDAS](https://github.com/ncats/IFX_Workshops_Tutorials/blob/main/202311_AMIA_Workshop/RDAS/README.md) (1:15-1:55 pm)  - Rare disease annotations (40 min)
 
 Break - 5 min
 
-#### [Pharos](/Pharos/README.md) (2:00-2:40 pm) - target annotations (and more) (40 min)
+#### [Pharos](https://github.com/ncats/IFX_Workshops_Tutorials/blob/main/202311_AMIA_Workshop/Pharos/README.md) (2:00-2:40 pm) - target annotations (and more) (40 min)
 
 Break - 5 min
 
-#### [RaMP-DB](/RaMP/README.md) (2:45-3:25 pm) - human metabolism (40 min)
+#### [RaMP-DB](https://github.com/ncats/IFX_Workshops_Tutorials/blob/main/202311_AMIA_Workshop/RaMP/README.md) (2:45-3:25 pm) - human metabolism (40 min)
 
 Break - 5 min
 
-#### [GSRS/Inxight](GSRS_Inxight) (3:30-3:50 pm) - drugs (20 min)
+#### [GSRS/Inxight](https://github.com/ncats/IFX_Workshops_Tutorials/blob/main/202311_AMIA_Workshop/GSRS-Inxight/README.md) (3:30-3:50 pm) - drugs (20 min)
 
 #### Workflows and Open Discussion (3:50-4:30 pm)
 
